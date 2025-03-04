@@ -219,5 +219,33 @@
     });
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const nameBox = document.getElementById("nameBox");
+    const saveButton = document.getElementById("saveMala"); // Make sure this ID matches the Save button in your HTML
+
+    nameBox.addEventListener("keydown", function (event) {
+        const allowedKeys = ["r", "a", "d", "Backspace", " ", "Enter"];
+
+        if (!allowedKeys.includes(event.key) && event.key.length === 1) {
+            event.preventDefault(); // Block all other characters except allowed ones
+        }
+
+        if (event.key === "Enter") {
+            saveButton.click(); // Simulate click on Save button
+            event.preventDefault();
+        }
+    });
+
+    // Disable copy, paste, and cut actions
+    ["paste", "copy", "cut"].forEach((eventType) => {
+        nameBox.addEventListener(eventType, function (event) {
+            event.preventDefault();
+        });
+    });
+});
+
+</script>
+
 </body>
 </html>
