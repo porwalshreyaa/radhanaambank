@@ -104,5 +104,19 @@
             document.getElementById("malaCount").innerText = "0.00";
         });
     </script>
+<audio id="bgMusic" loop>
+    <source src="Sri Radha Nam Kirtan _ Vrindavan Sankirtaniyas.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    document.addEventListener("click", function playMusic() {
+        let audio = document.getElementById("bgMusic");
+        if (audio.paused) {
+            audio.play();
+        }
+        document.removeEventListener("click", playMusic); // Ensures it starts only once
+    });
+</script>
+
 </body>
 </html>
