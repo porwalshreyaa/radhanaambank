@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" type="image/png" href="images/radhaicon.png">
     <meta charset="UTF-8">
@@ -7,7 +8,7 @@
     <title>Radha Naam Bank</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Kalam&display=swap');
-    
+
         body {
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -15,8 +16,9 @@
             background: linear-gradient(to bottom, #ffe4e1, #fffaf0);
             color: #804d5d;
             position: relative;
+            overflow: hidden;
         }
-    
+
         h1 {
             font-size: 32px;
             color: #d47fa6;
@@ -26,25 +28,42 @@
             background-size: 50px;
             padding-left: 60px;
         }
-    
+
+        #nameBox::placeholder {
+            color: #C0A060;
+            /* Muted Gold */
+            font-style: italic;
+            font-weight: lighter;
+            opacity: 0.8;
+            /* Makes it look softer */
+            text-shadow:none
+        }
+
         #nameBox {
-            width: 85%;
-            height: 120px;
-            font-size: 20px;
+            width: 80%;
+            height: 100px;
+            font-size: 18px;
+            color: #D4AF37;
+            /* Royal Blue */
+            font-weight: bold;
+            /* text-shadow: 1px 1px 4px rgba(255, 215, 0, 0.8); */
+            /* Soft glowing effect */
             border-radius: 12px;
             border: 2px solid #ffc0cb;
             padding: 10px;
+            margin: 5px;
             background: #fffaf3;
             box-shadow: 0 4px 8px rgba(255, 182, 193, 0.3);
             outline: none;
             transition: all 0.3s ease-in-out;
+            overflow: scroll;
         }
-    
+
         #nameBox:focus {
             border-color: #ff69b4;
             box-shadow: 0 6px 12px rgba(255, 182, 193, 0.5);
         }
-    
+
         .counter {
             margin-top: 15px;
             font-size: 18px;
@@ -55,10 +74,10 @@
             box-shadow: 2px 2px 6px rgba(255, 182, 193, 0.4);
             position: relative;
         }
-    
+
         /* Subtle floating 'राधा राधा' background */
         body::before {
-            content: "राधा राधा  राधा राधा  राधा राधा  ";
+            content: "राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  राधा राधा  ";
             font-family: 'Kalam', cursive;
             font-size: 24px;
             color: rgba(212, 127, 166, 0.2);
@@ -70,13 +89,21 @@
             animation: floatText 6s infinite linear;
             pointer-events: none;
         }
-    
+
         @keyframes floatText {
-            0% { transform: translateX(-30px); }
-            50% { transform: translateX(30px); }
-            100% { transform: translateX(-30px); }
+            0% {
+                transform: translateX(-30px);
+            }
+
+            50% {
+                transform: translateX(30px);
+            }
+
+            100% {
+                transform: translateX(-30px);
+            }
         }
-    
+
         button {
             margin-top: 12px;
             font-size: 18px;
@@ -90,12 +117,12 @@
             transition: all 0.3s ease-in-out;
             cursor: pointer;
         }
-    
+
         button:hover {
             background: linear-gradient(to right, #ff85c2, #ffb07f);
             box-shadow: 0 6px 14px rgba(255, 105, 180, 0.5);
         }
-    
+
         /* Cute circular buttons for 'रा' and 'धा' */
         .special-buttons {
             display: flex;
@@ -103,7 +130,7 @@
             gap: 10px;
             margin-top: 10px;
         }
-    
+
         .special-button {
             background: #ffb6c1;
             border-radius: 50%;
@@ -118,12 +145,12 @@
             transition: all 0.3s;
             font-family: 'Kalam', cursive;
         }
-    
+
         .special-button:hover {
             background: #ffaec9;
             box-shadow: 2px 6px 12px rgba(255, 182, 193, 0.5);
         }
-    
+
         /* Small Radha icon in bottom corner */
         .floating-radha {
             position: fixed;
@@ -136,13 +163,14 @@
             opacity: 0.8;
             transition: opacity 0.3s;
         }
-    
+
         .floating-radha:hover {
             opacity: 1;
         }
     </style>
-    
+
 </head>
+
 <body>
     <h1>राधा नाम बैंक</h1>
     <textarea id="nameBox" placeholder="Type Rada for राधा here or use buttons..."></textarea>
@@ -155,7 +183,7 @@
     <div class="counter">Malas in Box: <span id="malaCount">0</span></div>
     <div class="counter">Total Malas: <span id="totalMalaCount">0</span></div>
     <button id="saveMala">Save Mala</button>
-    
+
     <script>
         let totalNameCount = parseFloat(localStorage.getItem("totalNameCount")) || 0;
         let totalMalaCount = parseFloat(localStorage.getItem("totalMalaCount")) || 0;
@@ -169,83 +197,85 @@
             nameBox.dispatchEvent(new Event('input'));
         }
 
-        document.getElementById("nameBox").addEventListener("input", function(event) {
+        document.getElementById("nameBox").addEventListener("input", function (event) {
             let value = event.target.value;
             let transformed = value.replace(/R/g, "रा").replace(/A/g, "ा").replace(/D/g, "धा");
-            
+
             if (value.endsWith("rada")) {
                 transformed = transformed.slice(0, -4) + "राधा ";
             }
-            
+
             event.target.value = transformed;
-            
+
             let namesArray = transformed.match(/राधा/g) || [];
             let nameCount = namesArray.length;
             let malaCount = nameCount / 108;
-            
+
             document.getElementById("nameCount").innerText = nameCount;
             document.getElementById("malaCount").innerText = malaCount.toFixed(2);
         });
 
-        document.getElementById("saveMala").addEventListener("click", function() {
+        document.getElementById("saveMala").addEventListener("click", function () {
             let nameCount = parseInt(document.getElementById("nameCount").innerText);
             let malaCount = parseFloat(document.getElementById("malaCount").innerText);
-            
+
             totalNameCount += nameCount;
             totalMalaCount += malaCount;
-            
+
             localStorage.setItem("totalNameCount", totalNameCount);
             localStorage.setItem("totalMalaCount", totalMalaCount);
-            
+
             document.getElementById("totalNameCount").innerText = totalNameCount;
             document.getElementById("totalMalaCount").innerText = totalMalaCount.toFixed(2);
-            
+
             document.getElementById("nameBox").value = "";
             document.getElementById("nameCount").innerText = "0";
             document.getElementById("malaCount").innerText = "0.00";
         });
     </script>
-<audio id="bgMusic" loop>
-    <source src="Sri Radha Nam Kirtan _ Vrindavan Sankirtaniyas.mp3" type="audio/mpeg">
-</audio>
+    <audio id="bgMusic" loop>
+        <source src="Sri Radha Nam Kirtan _ Vrindavan Sankirtaniyas.mp3" type="audio/mpeg">
+    </audio>
 
-<script>
-    document.addEventListener("click", function playMusic() {
-        let audio = document.getElementById("bgMusic");
-        if (audio.paused) {
-            audio.play();
-        }
-        document.removeEventListener("click", playMusic); // Ensures it starts only once
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const nameBox = document.getElementById("nameBox");
-    const saveButton = document.getElementById("saveMala"); // Make sure this ID matches the Save button in your HTML
-
-    nameBox.addEventListener("keydown", function (event) {
-        const allowedKeys = ["r", "a", "d", "Backspace", " ", "Enter"];
-
-        if (!allowedKeys.includes(event.key) && event.key.length === 1) {
-            event.preventDefault(); // Block all other characters except allowed ones
-        }
-
-        if (event.key === "Enter") {
-            saveButton.click(); // Simulate click on Save button
-            event.preventDefault();
-        }
-    });
-
-    // Disable copy, paste, and cut actions
-    ["paste", "copy", "cut"].forEach((eventType) => {
-        nameBox.addEventListener(eventType, function (event) {
-            event.preventDefault();
+    <script>
+        document.addEventListener("click", function playMusic() {
+            let audio = document.getElementById("bgMusic");
+            if (audio.paused) {
+                audio.play();
+            }
+            document.removeEventListener("click", playMusic); // Ensures it starts only once
         });
-    });
-});
+    </script>
 
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const nameBox = document.getElementById("nameBox");
+            const saveButton = document.getElementById("saveMala"); // Make sure this ID matches the Save button in your HTML
+
+            nameBox.addEventListener("keydown", function (event) {
+                const allowedKeys = ["r", "a", "d", "Backspace", " ", "Enter"];
+
+                if (!allowedKeys.includes(event.key) && event.key.length === 1) {
+                    event.preventDefault(); // Block all other characters except allowed ones
+                }
+
+                if (event.key === "Enter") {
+                    saveButton.click(); // Simulate click on Save button
+                    event.preventDefault();
+                }
+            });
+
+            // Disable copy, paste, and cut actions
+            ["paste", "copy", "cut"].forEach((eventType) => {
+                nameBox.addEventListener(eventType, function (event) {
+                    event.preventDefault();
+                });
+            });
+        });
+
+    </script>
+<div class="floating-radha"></div>
 
 </body>
+
 </html>
